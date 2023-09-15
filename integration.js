@@ -13,7 +13,6 @@ function startup(logger){
 
 doLookup = (entities, options, cb) => {
     Logger.info(entities);
-    Logger.info(`apikey: ${options.apiKey}`);
     apiKey = options.apiKey;
     let lookupResults = [];
     async.each(entities, function(entity, next){
@@ -34,9 +33,7 @@ doLookup = (entities, options, cb) => {
         }else if(entity.isURL){
             parseIoC(entity.value, function (parsedIoC) {
                 Logger.info(`parsedIoC: ${parsedIoC}`);
-                Logger.info(`entity before: ${JSON.stringify(entity)}`);
                 entity.value = parsedIoC;
-                Logger.info(`entity after: ${JSON.stringify(entity)}`);
                 enrichDomain(entity, (err, result) => {
                     if (!err) {
                         lookupResults.push(result); // add to our results if there was no error
